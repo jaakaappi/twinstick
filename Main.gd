@@ -7,6 +7,7 @@ enum GameState {
 }
 
 export var player_icon_scene : PackedScene = preload("res://scenes/TankIcon.tscn")
+export var tank_scene : PackedScene = preload("res://scenes/Player.tscn")
 
 var state = GameState.MENU
 var players = {}
@@ -47,6 +48,8 @@ func _process_menu(delta):
 	# start handling
 	if players.size() > 1 and _ready_count == players.size():
 		print("all players ready")
+		_hide_menu()
+		_spawn_players()
 		state = GameState.GAME
 			
 func _add_player(id):
@@ -72,3 +75,19 @@ func _remove_player(id):
 	player_icon_instance.queue_free()
 	_player_icon_instances.erase(id)
 	print(players)
+	
+func _hide_menu():
+	for icon in _player_icon_instances.values():
+		icon.queue_free()
+	_player_icon_instances.clear()
+	_ready_count = 0
+	
+func _spawn_players():
+	for i in players:
+		var player = players[i]
+		
+		var tank_instance = tank_scene.instance()
+		tank_instance.position = Vector2(0,0)
+		tank_instance.player = player
+		tank_instance.movement_enabled = true
+		add_child(tank_instance)
