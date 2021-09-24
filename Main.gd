@@ -87,7 +87,7 @@ func _spawn_players():
 		var player = players[i]
 		
 		var tank_instance = tank_scene.instance()
-		tank_instance.position = Vector2(0,0)
+		tank_instance.position = Vector2(rand_range(10,100), rand_range(10,100))
 		tank_instance.player = player
 		tank_instance.movement_enabled = true
 		add_child(tank_instance)
