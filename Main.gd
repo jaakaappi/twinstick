@@ -5,6 +5,7 @@ enum GameState {
 	GAME = 1,
 	ENDGAME = 2
 }
+var COLORS = ["#2176ae","#57b8ff","#fe8b71","#fe6a48"]
 
 export var player_icon_scene : PackedScene = preload("res://scenes/TankIcon.tscn")
 export var tank_scene : PackedScene = preload("res://scenes/Player.tscn")
@@ -14,8 +15,9 @@ var players = {}
 var _player_icon_instances = {}
 var _ready_pressed = []
 var _ready_count = 0
-
-var COLORS = ["#2176ae","#57b8ff","#fe8b71","#fe6a48"]
+onready var _map = $Splitscreen/HBoxContainer1/VBoxContainer1/ViewportContainer
+onready var _splitscreen = $Splitscreen
+onready var _camera = $ViewportContainer/Viewport/Camera2D
 
 func _ready():
 	pass
@@ -57,7 +59,7 @@ func _add_player(id):
 	players[id] = Player.new(id, COLORS[player_count])
 	
 	var player_icon_instance = player_icon_scene.instance()
-	add_child(player_icon_instance)
+	_camera.add_child(player_icon_instance)
 	
 	var viewport_width = get_viewport_rect().size.x
 	var viewport_height = get_viewport_rect().size.y
@@ -90,4 +92,4 @@ func _spawn_players():
 		tank_instance.position = Vector2(rand_range(10,100), rand_range(10,100))
 		tank_instance.player = player
 		tank_instance.movement_enabled = true
-		add_child(tank_instance)
+		_splitscreen.add_world_child(tank_instance)

@@ -15,3 +15,13 @@ func _ready():
 	viewport2.world_2d = viewport1.world_2d
 	viewport3.world_2d = viewport1.world_2d
 	viewport4.world_2d = viewport1.world_2d
+	
+func add_world_child(child):
+	world.add_child(child)
+	
+func remove_world_child(child_name):
+	var child = world.find_node(child_name)
+	if child:
+		child.queue_free()
+	else:
+		print("Did not find child ", child_name)
