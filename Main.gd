@@ -15,9 +15,6 @@ var players = {}
 var _player_icon_instances = {}
 var _ready_pressed = []
 var _ready_count = 0
-onready var _map = $Splitscreen/HBoxContainer1/VBoxContainer1/ViewportContainer
-onready var _splitscreen = $Splitscreen
-onready var _camera = $ViewportContainer/Viewport/Camera2D
 
 func _ready():
 	pass
@@ -39,7 +36,7 @@ func _process_menu(delta):
 			if Input.is_joy_button_pressed(id, JOY_BUTTON_1):
 				_remove_player(id)
 			if Input.is_joy_button_pressed(id, JOY_BUTTON_2):
-				if not _ready_pressed.has(id):
+				if not _ready_pressed.has(id) and players.size() < 4:
 					players[id].ready = !players[id].ready
 					_ready_count += 1 if players[id].ready else -1
 					_player_icon_instances[id].get_node("check").visible = !_player_icon_instances[id].get_node("check").visible
@@ -59,7 +56,7 @@ func _add_player(id):
 	players[id] = Player.new(id, COLORS[player_count])
 	
 	var player_icon_instance = player_icon_scene.instance()
-	_camera.add_child(player_icon_instance)
+	add_child(player_icon_instance)
 	
 	var viewport_width = get_viewport_rect().size.x
 	var viewport_height = get_viewport_rect().size.y
@@ -89,7 +86,8 @@ func _spawn_players():
 		var player = players[i]
 		
 		var tank_instance = tank_scene.instance()
-		tank_instance.position = Vector2(rand_range(10,100), rand_range(10,100))
+		tank_instance.position = get_node("Spawn_"+str(i+1)).position
 		tank_instance.player = player
 		tank_instance.movement_enabled = true
-		_splitscreen.add_world_child(tank_instance)
+		add_child(tank_instance)
+		
