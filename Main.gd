@@ -45,7 +45,7 @@ func _process_menu(delta):
 			elif _ready_pressed.has(id):
 				_ready_pressed.erase(id)
 	# start handling
-	if players.size() > 1 and _ready_count == players.size():
+	if players.size() > 0 and _ready_count == players.size():
 		print("all players ready")
 		_hide_menu()
 		_spawn_players()
