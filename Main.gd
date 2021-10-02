@@ -12,9 +12,11 @@ export var tank_scene : PackedScene = preload("res://scenes/Player.tscn")
 
 var state = GameState.MENU
 var players = {}
+var tanks = []
 var _player_icon_instances = {}
 var _ready_pressed = []
 var _ready_count = 0
+var _last_reset = 0
 
 func _ready():
 	pass
@@ -25,6 +27,14 @@ func _process(delta):
 	
 	if state == GameState.MENU:
 		_process_menu(delta)
+	if state == GameState.GAME:
+		if Input.is_key_pressed(KEY_SPACE) and _last_reset < OS.get_ticks_msec():
+			for tank in tanks:
+				if is_instance_valid(tank):
+					tank.queue_free()
+			tanks.clear()
+			_spawn_players()
+			_last_reset = OS.get_ticks_msec() + 5000
 		
 func _process_menu(delta):
 	# input handling
@@ -89,5 +99,6 @@ func _spawn_players():
 		tank_instance.position = get_node("Spawn_"+str(i+1)).position
 		tank_instance.player = player
 		tank_instance.movement_enabled = true
+		tanks.append(tank_instance)
 		add_child(tank_instance)
 		

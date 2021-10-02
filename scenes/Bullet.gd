@@ -11,6 +11,10 @@ func _physics_process(delta):
 		get_parent().add_child(explosion)
 		explosion.position = collision_info.position
 		explosion.play()
+		if collision_info.collider.has_method("hit"):
+			collision_info.collider.hit()
 		queue_free()
-		
+
+func _on_VisibilityNotifier2D_screen_exited():
+	queue_free()
 
