@@ -6,8 +6,8 @@ export var movement_enabled = false
 var player: Player = Player.new(0, "")
 export var _bullet_scene : PackedScene = preload("res://scenes/Bullet.tscn")
 
-onready var _body_sprite: AnimatedSprite = $Body
-onready var _turret_sprite: AnimatedSprite = $Turret
+onready var _body_sprite: Sprite = $Body
+onready var _turret_sprite: Sprite = $Turret
 onready var _arrow_sprite: Sprite = $ArrowSprite
 
 var _angle = Vector2.ZERO
@@ -33,12 +33,15 @@ func _physics_process(delta):
 			).clamped(1)
 		
 		if _angle.length() > 0:
-			print(Vector2(_angle.y, _angle.x))
 			_arrow_sprite.rotation = _angle.angle()
 			_turret_sprite.rotation = _angle.angle()
 		
 		if velocity != Vector2.ZERO:
-			_body_sprite.rotation = velocity.angle()
+			var _body_angle = Vector2(
+			-Input.get_joy_axis(player.id, JOY_AXIS_1) if abs(Input.get_joy_axis(player.id, JOY_AXIS_1)) > 0.2 else 0,
+			Input.get_joy_axis(player.id, JOY_AXIS_0) if abs(Input.get_joy_axis(player.id, JOY_AXIS_0)) > 0.2 else 0
+			).clamped(1)
+			_body_sprite.rotation = _body_angle.angle()
 			
 		velocity = move_and_slide(velocity*speed)
 		
