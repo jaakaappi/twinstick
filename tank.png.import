@@ -1,0 +1,13 @@
+[remap]
+
+importer="image"
+type="Image"
+path="res://.import/tank.png-df5e9fed772773b995fab2b58735640c.image"
+
+[deps]
+
+source_file="res://tank.png"
+dest_files=[ "res://.import/tank.png-df5e9fed772773b995fab2b58735640c.image" ]
+
+[params]
+
