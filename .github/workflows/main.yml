@@ -1,7 +1,7 @@
 
 name: "godot-ci export"
 on:
-  dispatch-action:
+  workflow_dispatch:
 
 env:
   GODOT_VERSION: 3.3.4
@@ -27,11 +27,6 @@ jobs:
           mkdir -v -p build/web
           cd $EXPORT_NAME
           godot -v --export "HTML5" ../build/web/index.html
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: web
-          path: build/web
       # Installing rsync is needed in order to deploy to GitHub Pages. Without it, the build will fail.
       - name: Install rsync 📚
         run: |
