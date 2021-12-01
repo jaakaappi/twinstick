@@ -23,12 +23,14 @@ position = Vector2( 128, 576 )
 position = Vector2( 1792, 576 )
 
 [node name="InfoText" type="Label" parent="."]
-margin_left = 797.0
-margin_top = 521.0
-margin_right = 1148.0
-margin_bottom = 565.0
+margin_left = 705.0
+margin_top = 476.0
+margin_right = 1249.0
+margin_bottom = 614.0
 custom_fonts/font = ExtResource( 3 )
-text = "Press Start to join!"
+text = "Press controller Start to join!
+
+Press X to start the game!"
 align = 1
 valign = 1
 uppercase = true
