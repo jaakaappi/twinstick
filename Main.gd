@@ -90,6 +90,7 @@ func _hide_menu():
 		icon.queue_free()
 	_player_icon_instances.clear()
 	_ready_count = 0
+	self.find_node("InfoText").set_process(false)
 	
 func _spawn_players():
 	for i in players:
@@ -101,4 +102,3 @@ func _spawn_players():
 		tank_instance.movement_enabled = true
 		tanks.append(tank_instance)
 		add_child(tank_instance)
-		
